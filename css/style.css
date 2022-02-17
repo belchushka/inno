@@ -1,223 +1,30 @@
-* {
-    padding: 0;
+*{
     margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
-li {
-    list-style-type: none;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-}
-
-.icon {
-    width: 55px;
-    height: 55px;
-    background: red;
-
-}
-
-.container {
-    max-width: 1920px;
+.field {
     width: 100%;
-    padding: 0 50px;
+    height: 100vh;
+    border:1px solid black;
 }
 
-.navContainer {
-    display: flex;
-    margin-left: -10px;
-}
-
-.navElement {
-    margin-left: 50px;
-    font-family: Roboto Light;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-}
-
-.flexWrapper {
-    display: flex;
-    align-items: center;
-}
-
-header {
-    padding: 8px 0;
-}
-
-.introBlock {
-    width: 100%;
-    border: 1px solid black;
-    position: relative;
-}
-
-.introBlock:before {
-    content: "";
-    display: block;
-    padding-bottom: 42%;
-}
-
-.introBlock .image {
+.player {
+    width: 60px;
+    height: 60px;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
 }
 
-.introBlock .image img {
+.player img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
 }
 
-.introBlock .shadow {
+.btn {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    right: 0;
 }
-
-.introBlock .shadow img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.introBlock .textWrapper {
-    display: flex;
-    position: absolute;
-    width: 100%;
-    bottom: 80px;
-    justify-content: space-between;
-}
-
-.introBlock .textWrapper .text {
-    color: white;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 72px;
-}
-
-.textWrapper .flexWrapper {
-    width: 100%;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
-.buttons {
-    display: flex;
-    margin-left: -10px;
-}
-
-.button {
-    width: 45px;
-    height: 45px;
-    background: #fff;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 10px;
-}
-
-.backButton span {
-    display: block;
-    width: 15px;
-    height: 15px;
-    border-top: 2px solid black;
-    border-left: 2px solid black;
-    transform: rotate(-45deg) translateX(2px) translateY(3px);
-
-}
-
-.nextButton span {
-    display: block;
-    width: 15px;
-    height: 15px;
-    border-top: 2px solid black;
-    border-right: 2px solid black;
-    transform: rotate(45deg) translateY(1px);
-}
-
-.cardHolder {
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: -25px;
-}
-
-.cardHolder .card {
-    position: relative;
-    width: calc((100%/5) - 25px);
-    overflow: hidden;
-    margin-left: 25px;
-}
-
-.cardHolder .card:before {
-    content: "";
-    display: block;
-    padding-bottom: 136%;
-}
-
-.card .image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.card .image img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.card .contentWrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-    padding: 20px;
-}
-
-.card .contentWrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.card .price {
-    color: white;
-    background: #FA434B;
-    align-self: flex-start;
-    padding: 4px 12px;
-    border-radius: 14px;
-}
-
-.card .contentWrapper .title {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 25px;
-    color: white;
-}
-
-.card .contentWrapper .text {
-    font-weight: normal;
-    font-size: 14px;
-    margin-top: 5px;
-    color: #C7C7C7;
-}
-
-
-
-
-
