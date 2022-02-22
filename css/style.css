@@ -4,18 +4,58 @@
     box-sizing: border-box;
 }
 
-.field {
+.startGameScreen {
+    position: absolute;
     width: 100%;
     height: 100vh;
-    border:1px solid black;
+    background: rgba(0, 0, 0, 0.77);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.startGameScreen button {
+    padding: 10px 20px;
+    font-size: 25px;
+    border-radius: 5px;
+    border: 0;
+    background: #00a8ff;
+    color: white;
+    font-weight: bold;
+}
+
+main {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+main .field {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+}
+
+.field .block {
+    width: 36px;
+    height: 36px;
+    border: 1px solid black;
+}
+
+.field .row {
+    display: flex;
 }
 
 .player {
-    width: 60px;
-    height: 60px;
+    width: 36px;
+    height: 36px;
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 3;
 }
 
 .player img {
@@ -24,7 +64,23 @@
     object-fit: fill;
 }
 
-.btn {
+.apples {
+    width: 100%;
+    height: 100vh;
     position: absolute;
-    right: 0;
+    z-index: 2;
+}
+
+.apple {
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    top: 36px;
+    left: 36px;
+}
+
+.apple img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
 }

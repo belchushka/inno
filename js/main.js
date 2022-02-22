@@ -1,125 +1,78 @@
-//
+const field = document.querySelector(".field")
+const apples = document.querySelector(".apples")
+const btnPlay = document.querySelector("#btnPlay")
+const startGameScreen = document.querySelector(".startGameScreen")
+const blockSize = 36
+const blocksHorizontal = Math.floor(window.innerWidth / blockSize)-1
+const blocksVertical = Math.floor(window.innerHeight / blockSize) //20
+const grid = []
+let gameStarted = false
+let game = null
 
-//
-// let number = 5
-// let number2 = number
-// number2+=1
-// console.log(number,number2)
+for (let i=0; i<=blocksVertical; i++){
+    let row = []
+    for(let j=0; j<=blocksHorizontal;j++){
+        let block = new DOMParser().parseFromString("<div class='block'></div>","text/html").body.querySelector(".block")
+        row.push(block)
+    }
+    grid.push(row)
+}
 
+grid.forEach(el=>{
+    let row = new DOMParser().parseFromString("<div class='row'></div>","text/html").body.querySelector(".row")
+    el.forEach(el2=>{
+        row.append(el2)
+    })
+    field.append(row)
+})
 
-// let user = {
-//     name:"Savva",
-//     surname:"Shulgin",
-//     gender:{
-//         name:"Dima"
-//     },
-//     sayHi(){
-//         console.log(`Привет я ${this.name}`);
-//     }
-// }
-// let array = [1,2,3,4]
-// let array2 = [...array]
-// let user2 = {}
-// Object.assign(user2,user)
-//
-// let dog = {
-//     weight:22,
-//     breed:"",
-//     name:"",
-//     sayHi(){
-//         console.log("Gav");
-//     }
-// }
-//
-// let cat = {
-//     weight:22,
-//     breed:"",
-//     name:"",
-//     sayHi(){
-//         console.log("Myau");
-//     }
-// }
-//
-// class Animal {
-//     constructor(name, breed, weight, voice) {
-//         this.name = name
-//         this.breed = breed
-//         this.weight = weight
-//         this.voice = voice
-//     }
-//
-//     sayHi(){
-//         console.log(this.voice)
-//     }
-// }
-// let dog = new Animal("Bobik", "Haski",22, "Gav")
-// let cat = new Animal("Djinni","Abissian", 34, "May")
-//
-// cat.sayHi()
-//this==window
-
-
-let papa = document.querySelector(".player")
-let btn = document.querySelector(".btn")
-
-function Player(name,element, x, y){
-    this.name = name
-    this.element = element
+function Player(){
     this.x = x
     this.y = y
-    this.step = 60
-    this.goRight=()=>{
-        this.x+=60
-        this.element.style.left = this.x+"px"
-    }
-    this.goLeft=()=>{
-        this.x-=60
-        this.element.style.left = this.x+"px"
-    }
-    this.goTop=()=>{
-        this.y-=60
-        this.element.style.top = this.y+"px"
-    }
-    this.goBottom=()=>{
-        this.y+=60
-        this.element.style.top = this.y+"px"
+    this.body = document.querySelector(".player")
+    this.render = ()=>{
+        this.body.style.left = this.x+"px"
+        this.body.style.top = this.y + "px"
     }
 }
-let player = null
-let gameStarted = false
 
-let startGame = ()=>{
-    gameStarted = true
-    player=new Player("Papich",papa, 0, 0)
-}
-
-btn.addEventListener("click",()=>{
-    startGame()
-})
-
-document.addEventListener("keydown",(ev)=>{
-    if(!gameStarted){
-        alert("Press start")
-    }else{
-        switch (ev.key){
-            case "w":
-                player.goTop()
-                break
-            case "s":
-                player.goBottom()
-                break
-            case "a":
-                player.goLeft()
-                break
-            case "d":
-                player.goRight()
-                break
+function Game(player){
+    this.player = player
+    this.apples = []
+    this.startGame = ()=>{
+        for (let i = 0; i <3; i++) {
+            let newAppleX = Math.floor(Math.random()*blocksHorizontal)
+            let newAppleY = Math.floor(Math.random()*blocksVertical)
+            let apple = new Apple(newAppleX,newAppleY)
+            this.apples.push(apple)
+            apple.spawn()
         }
+
     }
+}
 
-})
+function Apple(x, y){
+    this.x = x
+    this.y = y
+    this.body = new DOMParser().parseFromString('<div class="apple">\n' +
+        '            <img src="assets/apple.png" alt="">\n' +
+        '        </div>', "text/html").body.querySelector(".apple")
+    this.spawn = ()=>{
+        this.body.style.left = this.x*blockSize+"px"
+        this.body.style.top = this.y*blockSize + "px"
+        apples.append(this.body)
+    }
+}
 
 
+
+
+btnPlay.onclick = ()=>{
+    startGameScreen.style.display = "none"
+    gameStarted = true
+    game = new Game()
+    game.startGame()
+}
 
 
 
