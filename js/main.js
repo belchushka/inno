@@ -1,78 +1,64 @@
-const field = document.querySelector(".field")
-const apples = document.querySelector(".apples")
-const btnPlay = document.querySelector("#btnPlay")
-const startGameScreen = document.querySelector(".startGameScreen")
-const blockSize = 36
-const blocksHorizontal = Math.floor(window.innerWidth / blockSize)-1
-const blocksVertical = Math.floor(window.innerHeight / blockSize) //20
-const grid = []
-let gameStarted = false
-let game = null
+const addBtn = document.querySelector(".addBtn")
+const headerInput = document.querySelector("#header")
+const todoInput = document.querySelector("#todo")
+const todos = document.querySelector(".todos")
+let todosArray = JSON.parse(localStorage.getItem("todos")) || []
 
-for (let i=0; i<=blocksVertical; i++){
-    let row = []
-    for(let j=0; j<=blocksHorizontal;j++){
-        let block = new DOMParser().parseFromString("<div class='block'></div>","text/html").body.querySelector(".block")
-        row.push(block)
-    }
-    grid.push(row)
-}
-
-grid.forEach(el=>{
-    let row = new DOMParser().parseFromString("<div class='row'></div>","text/html").body.querySelector(".row")
-    el.forEach(el2=>{
-        row.append(el2)
-    })
-    field.append(row)
-})
-
-function Player(){
-    this.x = x
-    this.y = y
-    this.body = document.querySelector(".player")
-    this.render = ()=>{
-        this.body.style.left = this.x+"px"
-        this.body.style.top = this.y + "px"
-    }
-}
-
-function Game(player){
-    this.player = player
-    this.apples = []
-    this.startGame = ()=>{
-        for (let i = 0; i <3; i++) {
-            let newAppleX = Math.floor(Math.random()*blocksHorizontal)
-            let newAppleY = Math.floor(Math.random()*blocksVertical)
-            let apple = new Apple(newAppleX,newAppleY)
-            this.apples.push(apple)
-            apple.spawn()
+const bindButtons = ()=>{
+    const deleteButtons = document.querySelectorAll(".deleteBtn")
+    Array.from(deleteButtons).forEach(el=>{
+        el.onclick = ()=>{
+            const deleteId = el.getAttribute("toDeleteId")
+            todosArray = todosArray.filter(el=>el.id!=deleteId)
+            localStorage.setItem("todos",JSON.stringify(todosArray))
+            render()
         }
+    })
+}
 
+
+addBtn.onclick = ()=>{
+    headerValue = headerInput.value.trim()
+    todoValue = todoInput.value.trim()
+    if (headerValue.length === 0 || todoValue.length === 0 ){
+        alert("Заполните все данные")
+    }else{
+        todosArray.push({
+            id:todosArray.length,
+            header:headerValue,
+            todo:todoValue,
+        })
+        localStorage.setItem("todos",JSON.stringify(todosArray))
+
+        headerInput.value = ""
+        todoInput.value = ""
+        render()
     }
 }
 
-function Apple(x, y){
-    this.x = x
-    this.y = y
-    this.body = new DOMParser().parseFromString('<div class="apple">\n' +
-        '            <img src="assets/apple.png" alt="">\n' +
-        '        </div>', "text/html").body.querySelector(".apple")
-    this.spawn = ()=>{
-        this.body.style.left = this.x*blockSize+"px"
-        this.body.style.top = this.y*blockSize + "px"
-        apples.append(this.body)
-    }
+const render = ()=>{
+    todos.innerHTML = ""
+    todosArray.forEach(el=>{
+        const element = new DOMParser().parseFromString(`<div class="todo">
+            <div class="title">
+                <h4>${el.header}</h4>
+            </div>
+            <div class="content">
+                <div class="text">
+                    ${el.todo}
+                </div>
+                <div class="actions">
+                    <button>Complete</button>
+                    <button class="deleteBtn" toDeleteId="${el.id}">Delete</button>
+                </div>
+            </div>
+
+        </div>`,"text/html").body.querySelector(".todo")
+        todos.append(element)
+    })
+    bindButtons()
 }
 
-
-
-
-btnPlay.onclick = ()=>{
-    startGameScreen.style.display = "none"
-    gameStarted = true
-    game = new Game()
-    game.startGame()
-}
-
-
+render()
+bindButtons()
 
